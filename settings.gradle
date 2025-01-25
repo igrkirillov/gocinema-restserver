@@ -1,0 +1,17 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+            url "$releaseRepo"
+            credentials {
+                username = "$repoUser"
+                password = "$repoPass"
+            }
+        }
+    }
+}
+
+rootProject.name = 'rest-server'

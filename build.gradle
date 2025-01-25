@@ -1,0 +1,68 @@
+buildscript {
+	dependencies {
+		classpath 'org.openapitools:openapi-generator-gradle-plugin:7.11.0'
+	}
+}
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.2'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+apply plugin: 'org.openapi.generator'
+
+group = 'ru.gocinema'
+version = '0.0.1'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(23)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+sourceSets.main.java.srcDirs = ['build/generated/src/main/java','src/main/java']
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'io.swagger.parser.v3:swagger-parser:2.1.25'
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'javax.annotation:javax.annotation-api:1.3.2'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+
+
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+compileJava.dependsOn tasks.named("openApiGenerate")
+
+openApiGenerate {
+	generatorName.set("spring")
+	inputSpec.set("$rootDir/src/main/resources/specs/petstore.yml")
+	outputDir.set("$buildDir/generated")
+	apiPackage.set("ru.gocinema.restapi")
+	modelPackage.set("ru.gocinema.restapi.model")
+	configOptions.set([
+			dateLibrary: "java8",
+			interfaceOnly: "true"
+	])
+}
