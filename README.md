@@ -3,6 +3,10 @@
 ```shell
 ./run.sh
 ```
+## Urls
+- http://localhost:8080/docs
+- http://localhost:8080/h2-console
+
 
 ## Таблицы
 - [Movie.java](src/main/java/ru/gocinema/rest/repositories/model/Movie.java)
