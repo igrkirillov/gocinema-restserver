@@ -1,4 +1,8 @@
 # Go-Cinema Rest Server
+## Запуск
+```shell
+./run.sh
+```
 
 ## Таблицы
 - [Movie.java](src/main/java/ru/gocinema/rest/repositories/model/Movie.java)
