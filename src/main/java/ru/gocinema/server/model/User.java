@@ -15,7 +15,7 @@ import lombok.ToString;
  * Пользователь системы. Имеет роль: {@link Role}.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "_user")
 @ToString
 @EqualsAndHashCode(of = "id")
 @Getter
