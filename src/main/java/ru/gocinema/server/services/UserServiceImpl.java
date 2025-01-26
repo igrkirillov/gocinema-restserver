@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final PasswordService passwordService;
 
     @Override
     public List<User> getUsers() {
@@ -22,6 +23,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(UserParameters parameters) {
-        return userMapper.map(userRepository.save(userMapper.map(parameters)));
+        var userToSave = userMapper.map(parameters);
+        userToSave.setPassword(passwordService.sign(parameters.getPassword()));
+        return userMapper.map(userRepository.save(userToSave));
     }
 }
