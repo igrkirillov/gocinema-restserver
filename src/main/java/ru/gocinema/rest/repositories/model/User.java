@@ -10,6 +10,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Пользователь системы. Имеет роль: {@link Role}.
+ */
 @Entity
 @Table(name = "user")
 @ToString

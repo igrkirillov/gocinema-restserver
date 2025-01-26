@@ -5,30 +5,30 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Билет
+ * Кино-зал
  */
 @Entity
-@Table(name = "ticket")
+@Table(name = "user")
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Ticket {
+public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column
+    private String name;
 
-    @Column(name = "qr_code")
-    private String qrCode;
+    @Column(name = "x_size")
+    private int xSize;
+
+    @Column(name = "y_size")
+    private int ySize;
 }
