@@ -32,11 +32,11 @@ public class HallPlace {
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @Column(name = "x_value")
-    private int xValue;
+    @Column(name = "_col")
+    private int col;
 
-    @Column(name = "y_value")
-    private int yValue;
+    @Column(name = "_row")
+    private int row;
 
     @Column(name = "is_vip")
     private boolean isVip;

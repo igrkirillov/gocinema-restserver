@@ -29,9 +29,9 @@ public class Hall {
     @Column
     private String name;
 
-    @Column(name = "x_size")
-    private int xSize;
+    @Column(name = "cols")
+    private int cols;
 
-    @Column(name = "y_size")
-    private int ySize;
+    @Column(name = "rows")
+    private int rows;
 }

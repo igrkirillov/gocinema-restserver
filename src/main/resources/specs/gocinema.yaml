@@ -9,6 +9,8 @@ servers:
 tags:
   - name: Users
     description: Пользователи
+  - name: Halls
+    description: Кинозалы
 paths:
   /users:
     get:
@@ -54,8 +56,81 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /halls:
+    get:
+      summary: Получение всех кинозалов
+      operationId: getHalls
+      tags:
+        - Halls
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hall'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Сохранение нового кинозала
+      operationId: saveHall
+      tags:
+        - Halls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HallParameters'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hall'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /halls/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    patch:
+      summary: Обновление кинозала
+      operationId: updateHall
+      tags:
+        - Halls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HallParameters'
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/id'
   schemas:
     User:
       type: object
@@ -69,6 +144,10 @@ components:
           example: "laba"
         role:
           $ref: '#/components/schemas/Role'
+      required:
+        - login
+        - password
+        - role
     UserParameters:
       type: object
       properties:
@@ -78,6 +157,54 @@ components:
           type: string
         role:
           $ref: '#/components/schemas/Role'
+      required:
+        - login
+        - password
+        - role
+    Hall:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          description: Наименование
+          example: "Вип-зал"
+        cols:
+          type: integer
+          format: int32
+          description: Кол-во мест по оси X
+        rows:
+          type: integer
+          format: int32
+          description: Кол-во мест по оси y
+      required:
+        - id
+        - name
+        - cols
+        - rows
+    HallParameters:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Наименование
+          example: "Вип-зал"
+        rows:
+          type: integer
+          format: int32
+          default: 0
+          description: Кол-во мест по оси X
+        cols:
+          type: integer
+          format: int32
+          default: 0
+          description: Кол-во мест по оси Y
+      required:
+        - name
+        - cols
+        - rows
     Error:
       type: object
       properties:
@@ -94,3 +221,8 @@ components:
       enum:
         - CUSTOMER
         - ADMIN
+    id:
+      description: Идентификатор сущности
+      type: integer
+      format: int32
+      example: 12345

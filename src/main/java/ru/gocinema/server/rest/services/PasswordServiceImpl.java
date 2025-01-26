@@ -1,4 +1,4 @@
-package ru.gocinema.server.services;
+package ru.gocinema.server.rest.services;
 
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.codec.digest.Md5Crypt;

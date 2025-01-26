@@ -1,4 +1,4 @@
-package ru.gocinema.server.controllers;
+package ru.gocinema.server.rest.controllers;
 
 import java.time.LocalDateTime;
 import lombok.Builder;

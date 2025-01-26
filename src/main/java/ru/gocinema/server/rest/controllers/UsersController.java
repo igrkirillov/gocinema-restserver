@@ -1,4 +1,4 @@
-package ru.gocinema.server.controllers;
+package ru.gocinema.server.rest.controllers;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.gocinema.restapi.UsersApi;
 import ru.gocinema.restapi.model.User;
 import ru.gocinema.restapi.model.UserParameters;
-import ru.gocinema.server.services.UserService;
+import ru.gocinema.server.rest.services.UserService;
 
 @RestController
 @RequiredArgsConstructor

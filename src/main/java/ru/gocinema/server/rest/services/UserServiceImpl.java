@@ -1,11 +1,11 @@
-package ru.gocinema.server.services;
+package ru.gocinema.server.rest.services;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gocinema.restapi.model.User;
 import ru.gocinema.restapi.model.UserParameters;
-import ru.gocinema.server.mappers.UserMapper;
+import ru.gocinema.server.rest.mappers.UserMapper;
 import ru.gocinema.server.repositories.UserRepository;
 
 @Service
