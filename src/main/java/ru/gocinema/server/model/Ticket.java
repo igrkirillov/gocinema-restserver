@@ -1,38 +1,36 @@
-package ru.gocinema.rest.repositories.model;
+package ru.gocinema.server.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Пользователь системы. Имеет роль: {@link Role}.
+ * Билет
  */
 @Entity
-@Table(name = "user")
+@Table(name = "ticket")
 @ToString
 @EqualsAndHashCode(of = "id")
-public class User {
+@Getter
+@Setter
+public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private int id;
 
-    @Column
-    private String login;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column
-    private String password;
-
-    @Column
-    private Role role;
-
-    public enum Role {
-        ADMIN, CUSTOMER
-    }
+    @Column(name = "qr_code")
+    private String qrCode;
 }

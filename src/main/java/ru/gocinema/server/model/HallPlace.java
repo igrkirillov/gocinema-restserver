@@ -1,4 +1,4 @@
-package ru.gocinema.rest.repositories.model;
+package ru.gocinema.server.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,25 +10,33 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Билет
+ * Место в зале
  */
 @Entity
-@Table(name = "ticket")
+@Table(name = "hall_place")
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Ticket {
+@Getter
+@Setter
+public class HallPlace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "hall_id")
+    private Hall hall;
 
-    @Column(name = "qr_code")
-    private String qrCode;
+    @Column(name = "x_value")
+    private int xValue;
+
+    @Column(name = "y_value")
+    private int yValue;
+
+    @Column(name = "is_vip")
+    private boolean isVip;
 }

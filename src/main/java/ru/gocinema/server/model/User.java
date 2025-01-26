@@ -1,4 +1,4 @@
-package ru.gocinema.rest.repositories.model;
+package ru.gocinema.server.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,27 +8,33 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Кино-зал
+ * Пользователь системы. Имеет роль: {@link Role}.
  */
 @Entity
 @Table(name = "user")
 @ToString
 @EqualsAndHashCode(of = "id")
-public class Hall {
+@Getter
+@Setter
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private int id;
 
     @Column
-    private String name;
+    private String login;
 
-    @Column(name = "x_size")
-    private int xSize;
+    @Column
+    private String password;
 
-    @Column(name = "y_size")
-    private int ySize;
+    @Column
+    private Role role;
+
+    public enum Role {
+        ADMIN, CUSTOMER
+    }
 }

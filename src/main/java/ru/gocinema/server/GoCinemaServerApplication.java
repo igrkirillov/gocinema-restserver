@@ -1,4 +1,4 @@
-package ru.gocinema.rest;
+package ru.gocinema.server;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class RestApplication {
+public class GoCinemaServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestApplication.class, args);
+		SpringApplication.run(GoCinemaServerApplication.class, args);
 	}
 
 	@Bean

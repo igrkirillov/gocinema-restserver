@@ -1,4 +1,4 @@
-package ru.gocinema.rest.repositories.model;
+package ru.gocinema.server.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -19,10 +20,11 @@ import lombok.ToString;
 @Table(name = "movie_show_place")
 @ToString
 @EqualsAndHashCode(of = "id")
+@Getter
+@Setter
 public class MovieShowPlace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private int id;
 
     // Ссылка на кино-сеанс
@@ -36,7 +38,8 @@ public class MovieShowPlace {
     private HallPlace hallPlace;
 
     // Ссылка на билет. Означает, что место выкуплено.
-    @Column(name = "ticket_id")
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
     // Забронировано ли место
