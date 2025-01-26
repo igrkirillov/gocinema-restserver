@@ -1,3 +1,5 @@
+--наполняем базу для начального запуска
+
 merge into _user(login, password, role)
 key(login)
 values ('admin', 'admin', 'ADMIN');
