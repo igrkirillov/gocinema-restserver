@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gocinema.restapi.model.User;
+import ru.gocinema.restapi.model.UserParameters;
 import ru.gocinema.server.mappers.UserMapper;
 import ru.gocinema.server.repositories.UserRepository;
 
@@ -17,5 +18,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUsers() {
         return userMapper.map(userRepository.findAll());
+    }
+
+    @Override
+    public User saveUser(UserParameters parameters) {
+        return userMapper.map(userRepository.save(userMapper.map(parameters)));
     }
 }

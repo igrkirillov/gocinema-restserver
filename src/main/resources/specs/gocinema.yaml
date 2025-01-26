@@ -31,6 +31,29 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    post:
+      summary: Заведение нового пользователя
+      operationId: saveUser
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserParameters'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
@@ -44,13 +67,30 @@ components:
           type: string
           description: Логин
           example: "laba"
+        role:
+          $ref: '#/components/schemas/Role'
+    UserParameters:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
     Error:
       type: object
       properties:
         code:
           type: integer
           format: int32
+          example: 123456
         message:
           type: string
           description: Текст ошибки
           example: "Упс!"
+    Role:
+      type: string
+      enum:
+        - CUSTOMER
+        - ADMIN

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.gocinema.restapi.UsersApi;
 import ru.gocinema.restapi.model.User;
+import ru.gocinema.restapi.model.UserParameters;
 import ru.gocinema.server.services.UserService;
 
 @RestController
@@ -17,5 +18,10 @@ public class UsersController implements UsersApi {
     @Override
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.getUsers());
+    }
+
+    @Override
+    public ResponseEntity<User> saveUser(UserParameters userParameters) {
+        return ResponseEntity.ok(userService.saveUser(userParameters));
     }
 }
