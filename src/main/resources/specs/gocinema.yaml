@@ -174,10 +174,12 @@ components:
         cols:
           type: integer
           format: int32
+          example: 5
           description: Кол-во мест по оси X
         rows:
           type: integer
           format: int32
+          example: 5
           description: Кол-во мест по оси y
       required:
         - id
@@ -194,12 +196,12 @@ components:
         rows:
           type: integer
           format: int32
-          default: 0
+          example: 5
           description: Кол-во мест по оси X
         cols:
           type: integer
           format: int32
-          default: 0
+          example: 5
           description: Кол-во мест по оси Y
       required:
         - name
@@ -221,6 +223,7 @@ components:
       enum:
         - CUSTOMER
         - ADMIN
+      example: "CUSTOMER"
     id:
       description: Идентификатор сущности
       type: integer
