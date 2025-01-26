@@ -23,6 +23,7 @@ import lombok.ToString;
 public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
 
     @Column

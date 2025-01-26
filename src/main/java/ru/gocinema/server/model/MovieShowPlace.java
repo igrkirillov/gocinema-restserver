@@ -25,6 +25,7 @@ import lombok.ToString;
 public class MovieShowPlace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
 
     // Ссылка на кино-сеанс

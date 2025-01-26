@@ -23,6 +23,7 @@ import lombok.ToString;
 public class MovieShow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
 
     @ManyToOne

@@ -25,6 +25,7 @@ import lombok.ToString;
 public class HallPlace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
 
     @ManyToOne
