@@ -9,14 +9,14 @@
 
 
 ## Таблицы
-- [Movie.java (Фильм)](src/main/java/ru/gocinema/server/repositories/model/Movie.java)
-- [Ticket.java (Выкупленный билет)](src/main/java/ru/gocinema/server/repositories/model/Ticket.java)
-- [User.java (Пользователь: покупатель или админ)](src/main/java/ru/gocinema/server/repositories/model/User.java)
-- [Hall.java (Кинозал)](src/main/java/ru/gocinema/server/repositories/model/Hall.java)
-- [HallPlace.java (Место в кинозале)](src/main/java/ru/gocinema/server/repositories/model/HallPlace.java)
-- [MovieShow.java (Киносеанс)](src/main/java/ru/gocinema/server/repositories/model/MovieShow.java)
-- [MovieShowPlace.java (Место на киносеанс)](src/main/java/ru/gocinema/server/repositories/model/MovieShowPlace.java)
+- [Movie.java (Фильм)](src/main/java/ru/gocinema/server/model/Movie.java)
+- [Ticket.java (Выкупленный билет)](src/main/java/ru/gocinema/server/model/Ticket.java)
+- [User.java (Пользователь: покупатель или админ)](src/main/java/ru/gocinema/server/model/User.java)
+- [Hall.java (Кинозал)](src/main/java/ru/gocinema/server/model/Hall.java)
+- [HallPlace.java (Место в кинозале)](src/main/java/ru/gocinema/server/model/HallPlace.java)
+- [MovieShow.java (Киносеанс)](src/main/java/ru/gocinema/server/model/MovieShow.java)
+- [MovieShowPlace.java (Место на киносеанс)](src/main/java/ru/gocinema/server/model/MovieShowPlace.java)
 
 ![postgres - gocinema.png](postgres%20-%20gocinema.png)
 ## Rest API Swagger
-[petstore.yml](src/main/resources/specs/petstore.yml)
+[gocinema.yaml](src/main/resources/specs/gocinema.yaml)
