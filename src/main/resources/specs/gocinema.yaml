@@ -50,7 +50,7 @@ components:
         code:
           type: integer
           format: int32
-        description:
+        message:
           type: string
           description: Текст ошибки
           example: "Упс!"

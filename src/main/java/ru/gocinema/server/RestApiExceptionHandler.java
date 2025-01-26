@@ -11,21 +11,20 @@ import ru.gocinema.restapi.model.Error;
 @RestControllerAdvice
 public class RestApiExceptionHandler {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<Error> invalidInputBodyHandler(ValidationException e) {
-        var error = new Error();
-        error.setCode(1);
-        error.setDescription(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Error> unexpectedErrorHandler(Exception e) {
+    public ResponseEntity<Error> errorHandler(Exception ex) {
         var error = new Error();
-        error.setCode(2);
-        error.setDescription(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        error.setMessage(ex.getMessage());
+        switch (ex) {
+            case ValidationException e -> {
+                error.setCode(1);
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+            }
+            default -> {
+                error.setCode(2);
+                return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 }

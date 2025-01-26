@@ -1,6 +1,7 @@
 package ru.gocinema.server.services;
 
 import java.util.List;
+import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gocinema.restapi.model.User;
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
+        if (true) throw new ValidationException("is not valid!");
         return userMapper.map(userRepository.findAll());
     }
 }
