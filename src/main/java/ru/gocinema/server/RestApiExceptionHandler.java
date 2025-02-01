@@ -1,6 +1,7 @@
 package ru.gocinema.server;
 
 import jakarta.validation.ValidationException;
+import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,8 +20,12 @@ public class RestApiExceptionHandler {
                 error.setCode(1);
                 return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
             }
-            default -> {
+            case NoSuchElementException e -> {
                 error.setCode(2);
+                return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+            }
+            default -> {
+                error.setCode(999);
                 return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
