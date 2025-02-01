@@ -13,6 +13,7 @@ public class RestApiExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Error> errorHandler(Exception ex) {
+        ex.printStackTrace();
         var error = new Error();
         error.setMessage(ex.getMessage());
         switch (ex) {

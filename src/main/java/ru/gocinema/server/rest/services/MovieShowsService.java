@@ -5,7 +5,7 @@ import ru.gocinema.restapi.model.MovieShow;
 import ru.gocinema.restapi.model.MovieShowParameters;
 
 public interface MovieShowsService {
-    List<MovieShow> getMovieShows(int hallId);
+    List<MovieShow> getMovieShows(Integer hallId);
     MovieShow saveMovieShow(MovieShowParameters parameters);
     void updateMovieShow(int id, MovieShowParameters parameters);
 }
