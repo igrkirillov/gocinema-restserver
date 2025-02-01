@@ -132,6 +132,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /hall-places:
+    parameters:
+      - $ref: '#/components/parameters/hallId'
+    get:
+      summary: Получить места в кино-зале
+      operationId: getHallPlaces
+      tags:
+        - HallPlaces
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /hall-places/{id}:
     parameters:
       - $ref: '#/components/parameters/id'
@@ -156,7 +173,9 @@ paths:
                 $ref: "#/components/schemas/Error"
   /movie-shows:
     get:
-      summary: Получение всех сеансов
+      parameters:
+        - $ref: '#/components/parameters/hallId'
+      summary: Получение сеансов
       operationId: getMovieShows
       tags:
         - MovieShows
@@ -222,6 +241,9 @@ paths:
                 $ref: "#/components/schemas/Error"
   /movie-show-places:
     get:
+      parameters:
+        - $ref: "#/components/parameters/hallId"
+        - $ref: "#/components/parameters/movieId"
       summary: Получение мест на киносеанс
       operationId: getMovieShowPlaces
       tags:
@@ -342,6 +364,28 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
   /tickets:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      summary: Получение всех билетов
+      operationId: getTickets
+      tags:
+        - Tickets
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     post:
       summary: Сохранение нового билета
       operationId: saveTicket
@@ -372,6 +416,24 @@ components:
       name: id
       in: path
       required: true
+      schema:
+        $ref: '#/components/schemas/id'
+    hallId:
+      name: hallId
+      description: id кино-зала
+      in: query      
+      schema:
+        $ref: '#/components/schemas/id'
+    movieId:
+      name: movieId
+      description: id фильма
+      in: query
+      schema:
+        $ref: '#/components/schemas/id'
+    userId:
+      name: userId
+      description: id пользователя
+      in: query
       schema:
         $ref: '#/components/schemas/id'
   schemas:
@@ -588,8 +650,6 @@ components:
         isBooked:
           type: boolean
           description: Место на сеанс забронировано?
-        ticket:
-          $ref: "#/components/schemas/Ticket"
     Ticket:
       type: object
       properties:
@@ -597,6 +657,8 @@ components:
           $ref: "#/components/schemas/id"
         user:
           $ref: "#/components/schemas/User"
+        movieShowPlace:
+          $ref: "#/components/schemas/MovieShowPlace"
         qrCode:
           type: string
           description: Кур-код билета

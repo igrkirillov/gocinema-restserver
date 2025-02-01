@@ -38,11 +38,6 @@ public class MovieShowPlace {
     @JoinColumn(name = "hall_place_id")
     private HallPlace hallPlace;
 
-    // Ссылка на билет. Означает, что место выкуплено.
-    @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
-
     // Забронировано ли место
     @Column(name = "is_booked")
     private boolean isBooked;
