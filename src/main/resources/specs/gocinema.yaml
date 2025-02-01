@@ -17,6 +17,10 @@ tags:
     description: Киносеансы
   - name: Movies
     description: Фильмы
+  - name: MovieShowPlace
+    description: Место на кино-сеанс
+  - name: Tickets
+    description: Билеты
 paths:
   /users:
     get:
@@ -216,6 +220,61 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /movie-show-places:
+    get:
+      summary: Получение мест на киносеанс
+      operationId: getMovieShowPlaces
+      tags:
+        - MovieShowPlaces
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieShowPlace'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /movie-show-places/{id}/book:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    put:
+      summary: Бронирование места на кино-сеанс
+      operationId: bookMovieShowPlace
+      tags:
+        - MovieShowPlaces
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /movie-show-places/{id}/cancel-book:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    put:
+      summary: Отмена бронирования места на кино-сеанс
+      operationId: cancelBookMovieShowPlace
+      tags:
+        - MovieShowPlaces
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /movies:
     get:
       summary: Получение всех фильмов
@@ -260,6 +319,53 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /movies/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    patch:
+      summary: Обновление параметров фильма
+      operationId: updateMovie
+      tags:
+        - Movies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovieParameters'
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /tickets:
+    post:
+      summary: Сохранение нового билета
+      operationId: saveTicket
+      tags:
+        - Tickets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketParameters'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   parameters:
     id:
@@ -349,6 +455,26 @@ components:
           type: boolean
           description: Признак, что место вип
           example: true
+    HallPlace:
+      type: object
+      properties:
+        hall:
+          $ref: "#/components/schemas/Hall"
+        col:
+          type: integer
+          format: int32
+          example: 10
+        row:
+          type: integer
+          format: int32
+          example: 1
+        isVip:
+          type: boolean
+          example: true
+      required:
+        - hall
+        - col
+        - row
     Error:
       type: object
       properties:
@@ -446,12 +572,40 @@ components:
           example: "Про любовь в гл роди К Хабенский"
         country:
           type: string
-          description: Название фильма
-          example: "Географ глобус пропил"
+          description: Страна
+          example: "Россия"
         releaseDate:
           type: string
           description: Дата выхода
           example: "2020-01-01"
+    MovieShowPlace:
+      type: object
+      properties:
+        movieShow:
+          $ref: "#/components/schemas/MovieShow"
+        hallPlace:
+          $ref: "#/components/schemas/HallPlace"
+        isBooked:
+          type: boolean
+          description: Место на сеанс забронировано?
+        ticket:
+          $ref: "#/components/schemas/Ticket"
+    Ticket:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+        user:
+          $ref: "#/components/schemas/User"
+        qrCode:
+          type: string
+          description: Кур-код билета
+          example: "&&234324$7dfsmmvvvvvvr3"
+    TicketParameters:
+      type: object
+      properties:
+        movieShowPlaceId:
+          $ref: "#/components/schemas/id"
     id:
       description: Идентификатор сущности
       type: integer
