@@ -67,3 +67,7 @@ openApiGenerate {
 			interfaceOnly: "true"
 	])
 }
+
+jar {
+	enabled = false
+}

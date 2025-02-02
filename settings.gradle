@@ -4,4 +4,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'rest-server'
+rootProject.name = 'gocinema-server'
