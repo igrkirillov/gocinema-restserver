@@ -45,6 +45,14 @@ public class HallServiceImpl implements HallService {
         hallRepository.save(hall);
     }
 
+    @Transactional
+    @Override
+    public void delete(int id) {
+        var hall = hallRepository.findById(id).orElseThrow();
+        clearAllPlaces(hall);
+        hallRepository.delete(hall);
+    }
+
     private void clearAllPlaces(ru.gocinema.server.model.Hall hall) {
         hallPlaceRepository.deleteAllByHallId(hall.getId());
     }

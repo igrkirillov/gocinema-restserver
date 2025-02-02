@@ -132,6 +132,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    delete:
+      summary: Удаление кинозала
+      operationId: deleteHall
+      tags:
+        - Halls
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /hall-places:
     parameters:
       - $ref: '#/components/parameters/hallId'

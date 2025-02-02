@@ -8,4 +8,5 @@ public interface HallService {
     List<Hall> getAll();
     Hall save(HallParameters parameters);
     void update(int id, HallParameters parameters);
+    void delete(int id);
 }

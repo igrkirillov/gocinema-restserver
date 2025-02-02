@@ -30,4 +30,10 @@ public class HallsController implements HallsApi {
         hallService.update(id, hallParameters);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Void> deleteHall(Integer id) {
+        hallService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 }
