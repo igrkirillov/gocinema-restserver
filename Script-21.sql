@@ -10,7 +10,9 @@ create table hall (
 	id serial primary key, 
 	name varchar(256) not null, 
 	x_size int not null, 
-	y_size int not null);
+	y_size int not null,
+	st_price int not null,
+	vip_price int not null);
 comment on table hall is 'Кинозал';
 	
 create table hall_place (
