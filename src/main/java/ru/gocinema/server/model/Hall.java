@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
@@ -40,5 +41,6 @@ public class Hall {
     private int rows;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinColumn(referencedColumnName = "id", name = "hall_id")
     private List<HallPlace> places;
 }

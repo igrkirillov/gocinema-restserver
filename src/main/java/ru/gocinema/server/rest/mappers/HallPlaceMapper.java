@@ -14,6 +14,12 @@ public interface HallPlaceMapper {
 
     HallPlace map(ru.gocinema.server.model.HallPlace source);
 
+    @AfterMapping
+    default void mapPost(@MappingTarget HallPlace target, ru.gocinema.server.model.HallPlace source) {
+        target.setIsBlocked(source.isBlocked());
+        target.setIsVip(source.isVip());
+    }
+
     List<HallPlace> map(Iterable<ru.gocinema.server.model.HallPlace> source);
 
     ru.gocinema.server.model.HallPlace map(HallPlaceParameters parameters);
