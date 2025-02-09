@@ -11,8 +11,6 @@ tags:
     description: Пользователи
   - name: Halls
     description: Кинозалы
-  - name: HallPlaces
-    description: Места в кинозале
   - name: MovieShows
     description: Киносеансы
   - name: Movies
@@ -137,51 +135,6 @@ paths:
       operationId: deleteHall
       tags:
         - Halls
-      responses:
-        200:
-          description: OK
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /hall-places:
-    parameters:
-      - $ref: '#/components/parameters/hallId'
-    get:
-      summary: Получить места в кино-зале
-      operationId: getHallPlaces
-      tags:
-        - HallPlaces
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/HallPlace'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /hall-places/{id}:
-    parameters:
-      - $ref: '#/components/parameters/id'
-    patch:
-      summary: Обновление параметров места в кинозале
-      operationId: updateHallPlace
-      tags:
-        - HallPlaces
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/HallPlaceParameters'
       responses:
         200:
           description: OK
@@ -504,6 +457,10 @@ components:
           format: int32
           example: 5
           description: Кол-во мест по оси y
+        places:
+          type: array
+          items:
+            $ref: '#/components/schemas/HallPlace'
       required:
         - id
         - name
@@ -526,6 +483,10 @@ components:
           format: int32
           example: 5
           description: Кол-во мест по оси Y
+        places:
+          type: array
+          items:
+            $ref: '#/components/schemas/HallPlaceParameters'
       required:
         - name
         - cols
@@ -533,15 +494,27 @@ components:
     HallPlaceParameters:
       type: object
       properties:
+        row:
+          type: integer
+          format: int32
+          description: Ряд (начинается с 0)
+          example: 0
+        col:
+          type: integer
+          format: int32
+          description: Место (начинается с 0)
+          example: 0
         isVip:
           type: boolean
           description: Признак, что место вип
           example: true
+        isBlocked:
+          type: boolean
+          description: Признак, что место заблокировано
+          example: true
     HallPlace:
       type: object
       properties:
-        hall:
-          $ref: "#/components/schemas/Hall"
         col:
           type: integer
           format: int32
@@ -551,6 +524,9 @@ components:
           format: int32
           example: 1
         isVip:
+          type: boolean
+          example: true
+        isBlocked:
           type: boolean
           example: true
       required:

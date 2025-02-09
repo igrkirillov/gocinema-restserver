@@ -40,4 +40,7 @@ public class HallPlace {
 
     @Column(name = "is_vip")
     private boolean isVip;
+
+    @Column(name = "is_blocked")
+    private boolean isBlocked;
 }
