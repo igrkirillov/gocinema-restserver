@@ -8,13 +8,13 @@ merge into _user(login, password, role)
 key(login)
 values ('customer', 'customer', 'CUSTOMER');
 
-merge into hall(name, cols, rows)
+merge into hall(name, cols, rows, st_price, vip_price)
 key(name)
-values ('Зал 1', 2, 2);
+values ('Зал 1', 2, 2, 100, 300);
 
-merge into hall(name, cols, rows)
+merge into hall(name, cols, rows, st_price, vip_price)
 key(name)
-values ('Зал 2', 0, 0);
+values ('Зал 2', 0, 0, 250, 550);
 
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)

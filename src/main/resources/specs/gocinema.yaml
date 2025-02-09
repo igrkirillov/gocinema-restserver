@@ -461,6 +461,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HallPlace'
+        standardPrice:
+          $ref: '#/components/schemas/standardPrice'
+        vipPrice:
+          $ref: '#/components/schemas/vipPrice'
       required:
         - id
         - name
@@ -487,6 +491,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HallPlaceParameters'
+        standardPrice:
+          $ref: '#/components/schemas/standardPrice'
+        vipPrice:
+          $ref: '#/components/schemas/vipPrice'
       required:
         - name
         - cols
@@ -669,3 +677,13 @@ components:
       type: integer
       format: int32
       example: 12345
+    standardPrice:
+      type: integer
+      format: int32
+      example: 300
+      description: цена за обычное кресло в руб
+    vipPrice:
+      type: integer
+      format: int32
+      example: 600
+      description: цена на vip кресло в руб

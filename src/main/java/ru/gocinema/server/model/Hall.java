@@ -43,4 +43,10 @@ public class Hall {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id", name = "hall_id")
     private List<HallPlace> places;
+
+    @Column(name = "st_price")
+    private int standardPrice;
+
+    @Column(name = "vip_price")
+    private int vipPrice;
 }
