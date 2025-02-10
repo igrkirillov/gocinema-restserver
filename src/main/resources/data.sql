@@ -31,3 +31,23 @@ values ((select id from hall where name = 'Зал 1'), 1, 0, false, false);
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
 values ((select id from hall where name = 'Зал 1'), 1, 1, false, false);
+
+merge into movie(name, description, duration, country, release_date)
+key(name)
+values ('Звёздные войны XXIII: Атака клонированных клонов', 'Фильм о звёздных войнах. Фантастика.', 130, 'США', '1990-01-01');
+
+merge into movie(name, description, duration, country, release_date)
+key(name)
+values ('Миссия выполнима', 'В главной роли Шварц', 120, 'США', '1991-02-08');
+
+merge into movie(name, description, duration, country, release_date)
+key(name)
+values ('Серая пантера', 'Про пантеру', 90, 'США', '1986-02-02');
+
+merge into movie(name, description, duration, country, release_date)
+key(name)
+values ('Движение вбок', 'Про спорт', 95, 'Испания', '2000-08-02');
+
+merge into movie(name, description, duration, country, release_date)
+key(name)
+values ('Кот Да Винчи', 'Документалка', 100, 'Италия', '2010-09-01');
