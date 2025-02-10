@@ -622,6 +622,11 @@ components:
           type: string
           description: Дата выхода
           example: "2020-01-01"
+        duration:
+          type: integer
+          format: int32
+          description: Длительность в минутах
+          example: 120
       required:
         - id
         - name
@@ -644,6 +649,11 @@ components:
           type: string
           description: Дата выхода
           example: "2020-01-01"
+        duration:
+          type: integer
+          format: int32
+          description: Длительность в минутах
+          example: 120
     MovieShowPlace:
       type: object
       properties:

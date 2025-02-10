@@ -35,4 +35,7 @@ public class Movie {
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
+
+    @Column
+    private int duration;
 }

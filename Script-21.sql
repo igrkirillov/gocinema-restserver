@@ -3,7 +3,8 @@ create table movie (
 	name varchar(256), 
 	description text, 
 	country varchar(64), 
-	release_date date);
+	release_date date,
+	duration int);
 comment on table movie is 'Фильм'; 
 
 create table hall (
