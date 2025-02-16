@@ -51,3 +51,23 @@ values ('Движение вбок', 'Про спорт', 95, 'Испания', 
 merge into movie(name, description, duration, country, release_date)
 key(name)
 values ('Кот Да Винчи', 'Документалка', 100, 'Италия', '2010-09-01');
+
+merge into movie_show(hall_id, movie_id, start)
+key(hall_id, movie_id, start)
+values ((select id from hall where name = 'Зал 1'), (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов'), '10:00');
+
+merge into movie_show(hall_id, movie_id, start)
+key(hall_id, movie_id, start)
+values ((select id from hall where name = 'Зал 1'), (select id from movie where name = 'Серая пантера'), '14:45');
+
+merge into movie_show(hall_id, movie_id, start)
+key(hall_id, movie_id, start)
+values ((select id from hall where name = 'Зал 1'), (select id from movie where name = 'Серая пантера'), '20:00');
+
+merge into movie_show(hall_id, movie_id, start)
+key(hall_id, movie_id, start)
+values ((select id from hall where name = 'Зал 2'), (select id from movie where name = 'Движение вбок'), '12:30');
+
+merge into movie_show(hall_id, movie_id, start)
+key(hall_id, movie_id, start)
+values ((select id from hall where name = 'Зал 2'), (select id from movie where name = 'Кот Да Винчи'), '08:00');
