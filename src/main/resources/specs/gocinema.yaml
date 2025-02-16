@@ -19,6 +19,8 @@ tags:
     description: Место на кино-сеанс
   - name: Tickets
     description: Билеты
+  - name: AppOptions
+    description: Можно вкл/выкл продажи
 paths:
   /users:
     get:
@@ -396,6 +398,46 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /app-options/{option}:
+    parameters:
+      - $ref: '#/components/parameters/option'
+    get:
+      summary: Получить значение опции
+      operationId: getAppOption
+      tags:
+        - AppOptions
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Сохранить значение опции
+      operationId: saveAppOption
+      tags:
+        - AppOptions
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   parameters:
@@ -423,6 +465,12 @@ components:
       in: query
       schema:
         $ref: '#/components/schemas/id'
+    option:
+      name: option
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/option'
   schemas:
     User:
       type: object
@@ -702,3 +750,7 @@ components:
       format: x-time
       description: Время начала
       example: "18:00"
+    option:
+      type: string
+      enum:
+        - IS_SALE_OPENED

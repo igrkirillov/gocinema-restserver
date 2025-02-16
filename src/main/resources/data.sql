@@ -71,3 +71,7 @@ values ((select id from hall where name = 'Зал 2'), (select id from movie whe
 merge into movie_show(hall_id, movie_id, start)
 key(hall_id, movie_id, start)
 values ((select id from hall where name = 'Зал 2'), (select id from movie where name = 'Кот Да Винчи'), '08:00');
+
+merge into app_option(_option, _value)
+key(_option)
+values ('IS_SALE_OPENED', 'true');
