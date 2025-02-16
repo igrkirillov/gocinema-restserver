@@ -39,7 +39,6 @@ public class HallServiceImpl implements HallService {
     @Transactional
     @Override
     public void delete(int id) {
-        var hall = hallRepository.findById(id).orElseThrow();
-        hallRepository.delete(hall);
+        hallRepository.deleteById(id);
     }
 }

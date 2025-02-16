@@ -8,4 +8,5 @@ public interface MovieShowsService {
     List<MovieShow> getMovieShows(Integer hallId);
     MovieShow saveMovieShow(MovieShowParameters parameters);
     void updateMovieShow(int id, MovieShowParameters parameters);
+    void deleteMovieShow(int id);
 }

@@ -212,6 +212,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    delete:
+      summary: Удаление кино-сеанса
+      operationId: deleteMovieShow
+      tags:
+        - MovieShows
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /movie-show-places:
     get:
       parameters:

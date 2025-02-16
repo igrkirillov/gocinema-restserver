@@ -38,6 +38,13 @@ public class MovieShowsServiceImpl implements MovieShowsService {
     public void updateMovieShow(int id, MovieShowParameters parameters) {
         ru.gocinema.server.model.MovieShow movieShow = movieShowRepository.findById(id).orElseThrow();
         movieShowsMapper.fromDto(parameters, movieShow);
+        movieShow.setHall(hallRepository.findById(parameters.getHallId()).orElseThrow());
+        movieShow.setMovie(movieRepository.findById(parameters.getMovieId()).orElseThrow());
         movieShowRepository.save(movieShow);
+    }
+
+    @Override
+    public void deleteMovieShow(int id) {
+        movieShowRepository.deleteById(id);
     }
 }

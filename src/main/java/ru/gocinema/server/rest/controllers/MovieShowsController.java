@@ -30,4 +30,10 @@ public class MovieShowsController implements MovieShowsApi {
         movieShowsService.updateMovieShow(id, parameters);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Void> deleteMovieShow(Integer id) {
+        movieShowsService.deleteMovieShow(id);
+        return ResponseEntity.ok().build();
+    }
 }
