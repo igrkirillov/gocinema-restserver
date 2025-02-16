@@ -34,9 +34,6 @@ public class MovieShow {
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @Column(name = "start_time")
-    private LocalTime startTime;
-
-    @Column(name = "end_time")
-    private LocalTime endTime;
+    @Column(name = "start")
+    private LocalTime start;
 }

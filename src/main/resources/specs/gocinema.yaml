@@ -567,20 +567,13 @@ components:
           $ref: "#/components/schemas/Hall"
         movie:
           $ref: "#/components/schemas/Movie"
-        startTime:
-          type: string
-          description: Время начала
-          example: "18:00"
-        endTime:
-          type: string
-          description: Время окончания
-          example: "20:00"
+        start:
+          $ref: "#/components/schemas/start"
       required:
         - id
         - hall
         - movie
-        - startTime
-        - endTime
+        - start
     MovieShowParameters:
       type: object
       properties:
@@ -588,19 +581,12 @@ components:
           $ref: "#/components/schemas/id"
         movieId:
           $ref: "#/components/schemas/id"
-        startTime:
-          type: string
-          description: Время начала
-          example: "18:00"
-        endTime:
-          type: string
-          description: Время окончания
-          example: "20:00"
+        start:
+          $ref: "#/components/schemas/start"
       required:
         - hallId
         - movieId
-        - startTime
-        - endTime
+        - start
     Movie:
       type: object
       properties:
@@ -697,3 +683,8 @@ components:
       format: int32
       example: 600
       description: цена на vip кресло в руб
+    start:
+      type: string
+      format: x-time
+      description: Время начала
+      example: "18:00"

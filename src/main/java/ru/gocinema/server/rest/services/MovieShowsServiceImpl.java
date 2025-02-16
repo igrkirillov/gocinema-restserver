@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gocinema.restapi.model.MovieShow;
 import ru.gocinema.restapi.model.MovieShowParameters;
+import ru.gocinema.server.repositories.HallRepository;
+import ru.gocinema.server.repositories.MovieRepository;
 import ru.gocinema.server.repositories.MovieShowRepository;
 import ru.gocinema.server.rest.mappers.MovieShowMapper;
 
@@ -15,6 +17,8 @@ public class MovieShowsServiceImpl implements MovieShowsService {
 
     private final MovieShowRepository movieShowRepository;
     private final MovieShowMapper movieShowsMapper;
+    private final HallRepository hallRepository;
+    private final MovieRepository movieRepository;
 
     @Override
     public List<MovieShow> getMovieShows(Integer hallId) {
@@ -23,7 +27,10 @@ public class MovieShowsServiceImpl implements MovieShowsService {
 
     @Override
     public MovieShow saveMovieShow(MovieShowParameters parameters) {
-        return movieShowsMapper.map(movieShowRepository.save(movieShowsMapper.map(parameters)));
+        var seance = movieShowsMapper.map(parameters);
+        seance.setHall(hallRepository.findById(parameters.getHallId()).orElseThrow());
+        seance.setMovie(movieRepository.findById(parameters.getMovieId()).orElseThrow());
+        return movieShowsMapper.map(movieShowRepository.save(seance));
     }
 
     @Transactional
