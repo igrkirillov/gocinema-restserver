@@ -74,4 +74,4 @@ values ((select id from hall where name = 'Зал 2'), (select id from movie whe
 
 merge into app_option(_option, _value)
 key(_option)
-values ('IS_SALE_OPENED', 'true');
+values ('IS_SALE_OPENED', 'false');
