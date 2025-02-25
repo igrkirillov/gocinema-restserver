@@ -2,11 +2,11 @@
 
 merge into _user(login, password, role)
 key(login)
-values ('admin', 'admin', 'ADMIN');
+values ('admin', '{sha256}e3ce4bd09a18ada61afb69c3a5cece0bb03244b4caaeecf88a2e4e243e1c7ce5c4c21c2274b76b17', 'ADMIN');
 
 merge into _user(login, password, role)
 key(login)
-values ('customer', 'customer', 'CUSTOMER');
+values ('client', '{sha256}c08b0031f931857a9c93dbb003368fb2f248c5a7e89a95370c57a36b623320848daf83d899bad546', 'CLIENT');
 
 merge into hall(name, cols, rows, st_price, vip_price)
 key(name)

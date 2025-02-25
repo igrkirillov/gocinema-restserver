@@ -617,9 +617,9 @@ components:
     Role:
       type: string
       enum:
-        - CUSTOMER
+        - CLIENT
         - ADMIN
-      example: "CUSTOMER"
+      example: "CLIENT"
     MovieShow:
       type: object
       properties:
