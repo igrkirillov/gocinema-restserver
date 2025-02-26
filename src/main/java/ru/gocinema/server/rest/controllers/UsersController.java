@@ -24,4 +24,9 @@ public class UsersController implements UsersApi {
     public ResponseEntity<User> saveUser(UserParameters userParameters) {
         return ResponseEntity.ok(userService.saveUser(userParameters));
     }
+
+    @Override
+    public ResponseEntity<User> getUserByLogin(String login) {
+        return ResponseEntity.ok(userService.getUserByLogin(login));
+    }
 }

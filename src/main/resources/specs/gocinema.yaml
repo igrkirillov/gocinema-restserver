@@ -6,6 +6,8 @@ info:
   version: project.version
 servers:
   - url: "/"
+security:
+  - basicAuth: []
 tags:
   - name: Users
     description: Пользователи
@@ -53,6 +55,32 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserParameters'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{login}:
+    get:
+      summary: Получение пользователя
+      operationId: getUserByLogin
+      tags:
+        - Users
+      parameters:
+        - name: login
+          in: path
+          schema:
+            type: string
+          required: true
+          description: логин
       responses:
         200:
           description: OK
@@ -754,3 +782,7 @@ components:
       type: string
       enum:
         - IS_SALE_OPENED
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

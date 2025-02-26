@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -49,6 +50,13 @@ public class GoCinemaServerApplication {
 	}
 
 	@Bean
+	public AuthenticationEntryPoint commence() {
+		return (request, response, accessDeniedException) -> {
+			response.addHeader("Access-Control-Allow-Origin", "*");
+		};
+	}
+
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(request -> request
@@ -59,6 +67,12 @@ public class GoCinemaServerApplication {
 						.anyRequest()
 						.authenticated())
 				.httpBasic(Customizer.withDefaults())
+				.exceptionHandling(config -> {
+					config.authenticationEntryPoint(commence());
+				})
+				.csrf(config -> {
+					config.ignoringRequestMatchers("/**");
+				})
 				.build();
 	}
 

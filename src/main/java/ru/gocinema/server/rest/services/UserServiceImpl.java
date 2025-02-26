@@ -1,6 +1,7 @@
 package ru.gocinema.server.rest.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gocinema.restapi.model.User;
@@ -26,5 +27,10 @@ public class UserServiceImpl implements UserService {
         var userToSave = userMapper.map(parameters);
         userToSave.setPassword(passwordService.sign(parameters.getPassword()));
         return userMapper.map(userRepository.save(userToSave));
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        return userMapper.map(userRepository.findByLogin(login).orElseThrow(NoSuchElementException::new));
     }
 }

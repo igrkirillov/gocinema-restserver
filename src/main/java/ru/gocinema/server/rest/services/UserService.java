@@ -7,4 +7,5 @@ import ru.gocinema.restapi.model.UserParameters;
 public interface UserService {
     List<User> getUsers();
     User saveUser(UserParameters parameters);
+    User getUserByLogin(String login);
 }
