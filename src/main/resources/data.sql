@@ -10,27 +10,27 @@ values ('client', '{sha256}c08b0031f931857a9c93dbb003368fb2f248c5a7e89a95370c57a
 
 merge into hall(name, cols, rows, st_price, vip_price)
 key(name)
-values ('Зал 1', 2, 2, 100, 300);
+values ('Ролан', 2, 2, 100, 300);
 
 merge into hall(name, cols, rows, st_price, vip_price)
 key(name)
-values ('Зал 2', 0, 0, 250, 550);
+values ('Чаплин', 0, 0, 250, 550);
 
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
-values ((select id from hall where name = 'Зал 1'), 0, 0, true, false);
+values ((select id from hall where name = 'Ролан'), 0, 0, true, false);
 
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
-values ((select id from hall where name = 'Зал 1'), 0, 1, false, true);
+values ((select id from hall where name = 'Ролан'), 0, 1, false, true);
 
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
-values ((select id from hall where name = 'Зал 1'), 1, 0, false, false);
+values ((select id from hall where name = 'Ролан'), 1, 0, false, false);
 
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
-values ((select id from hall where name = 'Зал 1'), 1, 1, false, false);
+values ((select id from hall where name = 'Ролан'), 1, 1, false, false);
 
 merge into movie(name, description, duration, country, release_date)
 key(name)
@@ -54,23 +54,23 @@ values ('Кот Да Винчи', 'Документалка', 100, 'Италия
 
 merge into movie_show(hall_id, movie_id, start)
 key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Зал 1'), (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов'), '10:00');
+values ((select id from hall where name = 'Ролан'), (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов'), '10:00');
 
 merge into movie_show(hall_id, movie_id, start)
 key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Зал 1'), (select id from movie where name = 'Серая пантера'), '14:45');
+values ((select id from hall where name = 'Ролан'), (select id from movie where name = 'Серая пантера'), '14:45');
 
 merge into movie_show(hall_id, movie_id, start)
 key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Зал 1'), (select id from movie where name = 'Серая пантера'), '20:00');
+values ((select id from hall where name = 'Ролан'), (select id from movie where name = 'Серая пантера'), '20:00');
 
 merge into movie_show(hall_id, movie_id, start)
 key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Зал 2'), (select id from movie where name = 'Движение вбок'), '12:30');
+values ((select id from hall where name = 'Чаплин'), (select id from movie where name = 'Движение вбок'), '12:30');
 
 merge into movie_show(hall_id, movie_id, start)
 key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Зал 2'), (select id from movie where name = 'Кот Да Винчи'), '08:00');
+values ((select id from hall where name = 'Чаплин'), (select id from movie where name = 'Кот Да Винчи'), '08:00');
 
 merge into app_option(_option, _value)
 key(_option)

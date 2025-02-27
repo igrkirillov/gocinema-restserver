@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gocinema.restapi.model.Hall;
 import ru.gocinema.restapi.model.HallParameters;
 import ru.gocinema.server.repositories.HallRepository;
+import ru.gocinema.server.repositories.MovieShowRepository;
 import ru.gocinema.server.rest.mappers.HallMapper;
 
 @Service
@@ -15,6 +16,7 @@ public class HallServiceImpl implements HallService {
 
     private final HallRepository hallRepository;
     private final HallMapper hallMapper;
+    private final MovieShowRepository movieShowRepository;
 
     @Override
     public List<Hall> getAll() {
@@ -39,6 +41,7 @@ public class HallServiceImpl implements HallService {
     @Transactional
     @Override
     public void delete(int id) {
+        movieShowRepository.deleteByHallId(id);
         hallRepository.deleteById(id);
     }
 }

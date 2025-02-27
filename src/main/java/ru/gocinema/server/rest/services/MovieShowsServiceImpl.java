@@ -15,10 +15,10 @@ import ru.gocinema.server.rest.mappers.MovieShowMapper;
 @RequiredArgsConstructor
 public class MovieShowsServiceImpl implements MovieShowsService {
 
-    private final MovieShowRepository movieShowRepository;
     private final MovieShowMapper movieShowsMapper;
     private final HallRepository hallRepository;
     private final MovieRepository movieRepository;
+    private final MovieShowRepository movieShowRepository;
 
     @Override
     public List<MovieShow> getMovieShows(Integer hallId) {
