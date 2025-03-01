@@ -40,6 +40,7 @@ public class Hall {
     @Column(name = "rows")
     private int rows;
 
+    @ToString.Exclude
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id", name = "hall_id")
     private List<HallPlace> places;

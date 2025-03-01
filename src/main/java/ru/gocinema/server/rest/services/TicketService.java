@@ -1,9 +1,10 @@
 package ru.gocinema.server.rest.services;
 
-import java.util.List;
+import ru.gocinema.restapi.model.BookingTicketParameters;
+import ru.gocinema.restapi.model.PaymentTicketParameters;
 import ru.gocinema.restapi.model.Ticket;
 
 public interface TicketService {
-    List<Ticket> getTickets(Integer userId);
-    Ticket createTicket(int movieShowPlaceId);
+    Ticket payTicket(Integer ticketId, PaymentTicketParameters parameters);
+    Ticket bookTicket(BookingTicketParameters parameters);
 }

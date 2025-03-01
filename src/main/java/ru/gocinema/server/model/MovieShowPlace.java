@@ -41,4 +41,8 @@ public class MovieShowPlace {
     // Забронировано ли место
     @Column(name = "is_booked")
     private boolean isBooked;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
 }

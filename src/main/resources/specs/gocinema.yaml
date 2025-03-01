@@ -379,39 +379,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /tickets:
-    get:
-      parameters:
-        - $ref: "#/components/parameters/userId"
-      summary: Получение всех билетов
-      operationId: getTickets
-      tags:
-        - Tickets
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Ticket'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+  /tickets/book:
     post:
-      summary: Сохранение нового билета
-      operationId: saveTicket
+      summary: Бронирование билета
+      operationId: bookTicket
       tags:
         - Tickets
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TicketParameters'
+              $ref: '#/components/schemas/BookingTicketParameters'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /tickets/{id}/pay:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    post:
+      summary: Оплата билета
+      operationId: payTicket
+      tags:
+        - Tickets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentTicketParameters'
       responses:
         200:
           description: OK
@@ -754,17 +758,28 @@ components:
           $ref: "#/components/schemas/id"
         user:
           $ref: "#/components/schemas/User"
-        movieShowPlace:
-          $ref: "#/components/schemas/MovieShowPlace"
+        isPayed:
+          type: boolean
         qrCode:
           type: string
           description: Кур-код билета
           example: "&&234324$7dfsmmvvvvvvr3"
-    TicketParameters:
+        movieShowPlaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/MovieShowPlace"
+    BookingTicketParameters:
       type: object
       properties:
-        movieShowPlaceId:
-          $ref: "#/components/schemas/id"
+        movieShowPlaceIds:
+          type: array
+          items:
+            $ref: "#/components/schemas/id"
+    PaymentTicketParameters:
+      type: object
+      properties:
+        card:
+          type: string
     id:
       description: Идентификатор сущности
       type: integer
