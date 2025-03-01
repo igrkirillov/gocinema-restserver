@@ -259,8 +259,7 @@ paths:
   /movie-show-places:
     get:
       parameters:
-        - $ref: "#/components/parameters/hallId"
-        - $ref: "#/components/parameters/movieId"
+        - $ref: "#/components/parameters/movieShowId"
       summary: Получение мест на киносеанс
       operationId: getMovieShowPlaces
       tags:
@@ -484,6 +483,12 @@ components:
     movieId:
       name: movieId
       description: id фильма
+      in: query
+      schema:
+        $ref: '#/components/schemas/id'
+    movieShowId:
+      name: movieShowId
+      description: id кино-сеанса
       in: query
       schema:
         $ref: '#/components/schemas/id'

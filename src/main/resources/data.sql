@@ -56,22 +56,46 @@ merge into movie_show(hall_id, movie_id, start)
 key(hall_id, movie_id, start)
 values ((select id from hall where name = 'Ролан'), (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов'), '10:00');
 
-merge into movie_show(hall_id, movie_id, start)
-key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Ролан'), (select id from movie where name = 'Серая пантера'), '14:45');
-
-merge into movie_show(hall_id, movie_id, start)
-key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Ролан'), (select id from movie where name = 'Серая пантера'), '20:00');
-
-merge into movie_show(hall_id, movie_id, start)
-key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Чаплин'), (select id from movie where name = 'Движение вбок'), '12:30');
-
-merge into movie_show(hall_id, movie_id, start)
-key(hall_id, movie_id, start)
-values ((select id from hall where name = 'Чаплин'), (select id from movie where name = 'Кот Да Винчи'), '08:00');
-
 merge into app_option(_option, _value)
 key(_option)
 values ('IS_SALE_OPENED', 'true');
+
+merge into movie_show_place(movie_show_id, hall_place_id, is_booked)
+key(movie_show_id, hall_place_id)
+values (
+(select id from movie_show where hall_id = (select id from hall where name = 'Ролан')
+and movie_id = (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов')
+and start = '10:00'),
+(select id from hall_place where hall_id = (select id from hall where name = 'Ролан')
+and _row = 0 and _col = 0),
+false);
+
+merge into movie_show_place(movie_show_id, hall_place_id, is_booked)
+key(movie_show_id, hall_place_id)
+values (
+(select id from movie_show where hall_id = (select id from hall where name = 'Ролан')
+and movie_id = (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов')
+and start = '10:00'),
+(select id from hall_place where hall_id = (select id from hall where name = 'Ролан')
+and _row = 0 and _col = 1),
+false);
+
+merge into movie_show_place(movie_show_id, hall_place_id, is_booked)
+key(movie_show_id, hall_place_id)
+values (
+(select id from movie_show where hall_id = (select id from hall where name = 'Ролан')
+and movie_id = (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов')
+and start = '10:00'),
+(select id from hall_place where hall_id = (select id from hall where name = 'Ролан')
+and _row = 1 and _col = 0),
+false);
+
+merge into movie_show_place(movie_show_id, hall_place_id, is_booked)
+key(movie_show_id, hall_place_id)
+values (
+(select id from movie_show where hall_id = (select id from hall where name = 'Ролан')
+and movie_id = (select id from movie where name = 'Звёздные войны XXIII: Атака клонированных клонов')
+and start = '10:00'),
+(select id from hall_place where hall_id = (select id from hall where name = 'Ролан')
+and _row = 1 and _col = 1),
+false);

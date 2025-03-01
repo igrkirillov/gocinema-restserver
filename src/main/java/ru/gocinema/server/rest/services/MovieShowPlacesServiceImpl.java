@@ -16,8 +16,8 @@ public class MovieShowPlacesServiceImpl implements MovieShowPlacesService {
     private final MovieShowPlaceMapper movieShowPlaceMapper;
 
     @Override
-    public List<MovieShowPlace> getMovieShowPlaces(Integer hallId, Integer movieId) {
-        return movieShowPlaceMapper.map(movieShowPlaceRepository.findByParameters(hallId, movieId));
+    public List<MovieShowPlace> getMovieShowPlaces(Integer movieShowId) {
+        return movieShowPlaceMapper.map(movieShowPlaceRepository.findByParameters(movieShowId));
     }
 
     @Transactional

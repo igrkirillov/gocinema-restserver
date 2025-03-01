@@ -15,8 +15,8 @@ public class MovieShowPlacesController implements MovieShowPlacesApi {
     private final MovieShowPlacesService movieShowPlacesService;
 
     @Override
-    public ResponseEntity<List<MovieShowPlace>> getMovieShowPlaces(Integer hallId, Integer movieId) {
-        return ResponseEntity.ok(movieShowPlacesService.getMovieShowPlaces(hallId, movieId));
+    public ResponseEntity<List<MovieShowPlace>> getMovieShowPlaces(Integer movieShowId) {
+        return ResponseEntity.ok(movieShowPlacesService.getMovieShowPlaces(movieShowId));
     }
 
     @Override
