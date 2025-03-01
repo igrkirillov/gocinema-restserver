@@ -738,6 +738,8 @@ components:
     MovieShowPlace:
       type: object
       properties:
+        id:
+          $ref: "#/components/schemas/id"
         movieShow:
           $ref: "#/components/schemas/MovieShow"
         hallPlace:

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.gocinema.restapi.model.HallPlace;
 import ru.gocinema.restapi.model.HallPlaceParameters;
@@ -12,13 +13,9 @@ import ru.gocinema.restapi.model.HallPlaceParameters;
 @Mapper(componentModel = "spring", imports = BooleanUtils.class)
 public interface HallPlaceMapper {
 
+    @Mapping(target = "isBlocked", expression = "java(source.isBlocked())")
+    @Mapping(target = "isVip", expression = "java(source.isVip())")
     HallPlace map(ru.gocinema.server.model.HallPlace source);
-
-    @AfterMapping
-    default void mapPost(@MappingTarget HallPlace target, ru.gocinema.server.model.HallPlace source) {
-        target.setIsBlocked(source.isBlocked());
-        target.setIsVip(source.isVip());
-    }
 
     List<HallPlace> map(Iterable<ru.gocinema.server.model.HallPlace> source);
 

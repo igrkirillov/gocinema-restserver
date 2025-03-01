@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.gocinema.restapi.model.MovieShowPlace;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {MovieShowMapper.class, HallPlaceMapper.class, MovieMapper.class, HallMapper.class})
 public interface MovieShowPlaceMapper {
     @Mapping(target = "isBooked", expression = "java(source.isBooked())")
     MovieShowPlace map(ru.gocinema.server.model.MovieShowPlace source);
