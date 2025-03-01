@@ -1,11 +1,13 @@
 package ru.gocinema.server.rest.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gocinema.restapi.model.MovieShow;
 import ru.gocinema.restapi.model.MovieShowParameters;
+import ru.gocinema.server.model.MovieShowPlace;
 import ru.gocinema.server.repositories.HallRepository;
 import ru.gocinema.server.repositories.MovieRepository;
 import ru.gocinema.server.repositories.MovieShowRepository;
@@ -27,10 +29,11 @@ public class MovieShowsServiceImpl implements MovieShowsService {
 
     @Override
     public MovieShow saveMovieShow(MovieShowParameters parameters) {
-        var seance = movieShowsMapper.map(parameters);
-        seance.setHall(hallRepository.findById(parameters.getHallId()).orElseThrow());
-        seance.setMovie(movieRepository.findById(parameters.getMovieId()).orElseThrow());
-        return movieShowsMapper.map(movieShowRepository.save(seance));
+        var movieShow = movieShowsMapper.map(parameters);
+        movieShow.setHall(hallRepository.findById(parameters.getHallId()).orElseThrow());
+        movieShow.setMovie(movieRepository.findById(parameters.getMovieId()).orElseThrow());
+        movieShow.setPlaces(new ArrayList<>(createMovieShowPlaces(movieShow)));
+        return movieShowsMapper.map(movieShowRepository.save(movieShow));
     }
 
     @Transactional
@@ -40,11 +43,21 @@ public class MovieShowsServiceImpl implements MovieShowsService {
         movieShowsMapper.fromDto(parameters, movieShow);
         movieShow.setHall(hallRepository.findById(parameters.getHallId()).orElseThrow());
         movieShow.setMovie(movieRepository.findById(parameters.getMovieId()).orElseThrow());
+        movieShow.setPlaces(new ArrayList<>(createMovieShowPlaces(movieShow)));
         movieShowRepository.save(movieShow);
     }
 
     @Override
     public void deleteMovieShow(int id) {
         movieShowRepository.deleteById(id);
+    }
+
+    private List<MovieShowPlace> createMovieShowPlaces(ru.gocinema.server.model.MovieShow movieShow) {
+        return movieShow.getHall().getPlaces().stream().map(hallPlace -> {
+            MovieShowPlace place = new MovieShowPlace();
+            place.setMovieShow(movieShow);
+            place.setHallPlace(hallPlace);
+            return place;
+        }).toList();
     }
 }

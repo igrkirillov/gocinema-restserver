@@ -14,7 +14,7 @@ values ('Ролан', 2, 2, 100, 300);
 
 merge into hall(name, cols, rows, st_price, vip_price)
 key(name)
-values ('Чаплин', 0, 0, 250, 550);
+values ('Чаплин', 3, 3, 250, 550);
 
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
@@ -31,6 +31,42 @@ values ((select id from hall where name = 'Ролан'), 1, 0, false, false);
 merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
 values ((select id from hall where name = 'Ролан'), 1, 1, false, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 0, 0, true, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 0, 1, true, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 0, 2, true, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 1, 0, true, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 1, 1, true, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 1, 2, true, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 2, 0, false, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 2, 1, false, false);
+
+merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
+key(hall_id, _row, _col)
+values ((select id from hall where name = 'Чаплин'), 2, 2, false, false);
 
 merge into movie(name, description, duration, country, release_date)
 key(name)
