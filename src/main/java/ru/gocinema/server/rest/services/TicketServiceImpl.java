@@ -39,9 +39,7 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     @Override
     public Ticket payTicket(Integer ticketId, PaymentTicketParameters parameters) {
-        if (isSaleClosed()) {
-            throw new IllegalStateException(SALE_CLOSED_MESSAGE);
-        }
+        checkSaleOpened();
         ru.gocinema.server.model.Ticket ticket = ticketRepository.findById(ticketId).orElseThrow();
         ticket.setQrCode("QR" + StringUtils.leftPad(String.valueOf(ticketId), 5, '0'));
         ticket.setPayed(true);
@@ -52,9 +50,7 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     @Override
     public Ticket bookTicket(BookingTicketParameters parameters) {
-        if (isSaleClosed()) {
-            throw new IllegalStateException(SALE_CLOSED_MESSAGE);
-        }
+        checkSaleOpened();
         ru.gocinema.server.model.Ticket ticket = new ru.gocinema.server.model.Ticket();
         ticket.setUser(securityService.getCurrentUser());
         ticket.setPayed(false);
@@ -82,7 +78,11 @@ public class TicketServiceImpl implements TicketService {
         return ticketsMapper.map(ticketRepository.save(ticket));
     }
 
-    private boolean isSaleClosed() {
-        return BooleanUtils.toBooleanObject(appOptionService.getAppOption(Option.IS_SALE_OPENED).getValue());
+    private void checkSaleOpened() {
+        boolean isSaleOpened = BooleanUtils.toBooleanObject(
+                appOptionService.getAppOption(Option.IS_SALE_OPENED).getValue());
+        if (!isSaleOpened) {
+            throw new IllegalStateException(SALE_CLOSED_MESSAGE);
+        }
     }
 }
