@@ -12,7 +12,6 @@ public interface MovieShowMapper {
     MovieShow map(ru.gocinema.server.model.MovieShow source);
 
     List<MovieShow> map(Iterable<ru.gocinema.server.model.MovieShow> source);
-
     ru.gocinema.server.model.MovieShow map(MovieShowParameters parameters);
 
     @InheritInverseConfiguration
