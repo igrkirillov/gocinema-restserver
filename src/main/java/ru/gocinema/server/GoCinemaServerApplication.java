@@ -68,7 +68,7 @@ public class GoCinemaServerApplication {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(request -> request
-						.requestMatchers("/", "/swagger/**", "/swagger-ui/**", "/h2-console/**")
+						.requestMatchers("/", "/swagger/**", "/swagger-ui/**", "/h2-console/**", "/posters")
 						.permitAll()
 						.requestMatchers(HttpMethod.OPTIONS)
 						.permitAll()

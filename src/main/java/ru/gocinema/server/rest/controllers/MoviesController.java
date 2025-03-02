@@ -2,6 +2,7 @@ package ru.gocinema.server.rest.controllers;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.gocinema.restapi.MoviesApi;
@@ -28,6 +29,12 @@ public class MoviesController implements MoviesApi {
     @Override
     public ResponseEntity<Void> updateMovie(Integer id, MovieParameters parameters) {
         movieService.updateMovie(id, parameters);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> savePoster(Integer id, String fileName, Resource body) {
+        movieService.savePoster(id, fileName, body);
         return ResponseEntity.ok().build();
     }
 }

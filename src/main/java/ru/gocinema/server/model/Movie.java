@@ -38,4 +38,7 @@ public class Movie {
 
     @Column
     private int duration;
+
+    @Column(name = "poster_url")
+    private String posterUrl;
 }

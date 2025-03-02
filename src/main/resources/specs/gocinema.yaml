@@ -23,6 +23,8 @@ tags:
     description: Билеты
   - name: AppOptions
     description: Можно вкл/выкл продажи
+  - name: Posters
+    description: Постеры (публ доступ)
 paths:
   /users:
     get:
@@ -364,6 +366,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /movies/{id}/poster:
+    parameters:
+      - $ref: '#/components/parameters/id'
+      - name: fileName
+        in: query
+        schema:
+          type: string
+    post:
+      summary: Загрузка постера
+      operationId: savePoster
+      tags:
+        - Movies
+      requestBody:
+        content:
+          image/*:
+            schema:
+              type: string
+              format: binary
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /tickets/book:
     post:
       summary: Бронирование билета
@@ -448,6 +477,31 @@ paths:
       responses:
         200:
           description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /posters:
+    parameters:
+      - name: fileName
+        in: query
+        schema:
+          type: string
+    get:
+      summary: Получить постер
+      operationId: getPoster
+      tags:
+        - Posters
+      responses:
+        200:
+          description: OK
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
         default:
           description: unexpected error
           content:
@@ -706,6 +760,9 @@ components:
           format: int32
           description: Длительность в минутах
           example: 120
+        posterUrl:
+          type: string
+          example: "/posters?fileName=5-avatar.jpg"
       required:
         - id
         - name
