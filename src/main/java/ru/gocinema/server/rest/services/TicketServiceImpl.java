@@ -34,6 +34,7 @@ public class TicketServiceImpl implements TicketService {
     private final AppOptionService appOptionService;
 
     private static final String SALE_CLOSED_MESSAGE = "Продажи закрыты";
+    private static final String PLACES_BOOKED_ALREADY = "Места уже забронены";
 
     @Transactional
     @Override
@@ -64,7 +65,7 @@ public class TicketServiceImpl implements TicketService {
                 parameters.getSeanceDate()).stream().map(bp -> bp.getHallPlace().getId()).collect(
                 Collectors.toSet());
         if (parameters.getPlaceIds().stream().anyMatch(placeIdsOfBooked::contains)) {
-            throw new IllegalStateException("Места уже забронены");
+            throw new IllegalStateException(PLACES_BOOKED_ALREADY);
         }
 
         List<BookedPlace> bookedPlaces = parameters.getPlaceIds().stream().map(plId -> {
