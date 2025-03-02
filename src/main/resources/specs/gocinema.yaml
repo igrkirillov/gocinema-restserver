@@ -645,11 +645,13 @@ components:
           format: int32
           example: 5
           description: Кол-во мест по оси X
+          minimum: 1
         cols:
           type: integer
           format: int32
           example: 5
           description: Кол-во мест по оси Y
+          minimum: 1
         places:
           type: array
           items:
@@ -703,7 +705,6 @@ components:
           type: boolean
           example: true
       required:
-        - hall
         - col
         - row
     Error:
@@ -808,6 +809,7 @@ components:
           format: int32
           description: Длительность в минутах
           example: 120
+          minLength: 5
     BookedPlace:
       type: object
       properties:
@@ -865,11 +867,13 @@ components:
       format: int32
       example: 300
       description: цена за обычное кресло в руб
+      minimum: 50
     vipPrice:
       type: integer
       format: int32
       example: 600
       description: цена на vip кресло в руб
+      minimum: 100
     start:
       type: string
       format: x-time
