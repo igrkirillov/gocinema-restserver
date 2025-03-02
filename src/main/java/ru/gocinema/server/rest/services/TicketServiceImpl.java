@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gocinema.restapi.model.BookingTicketParameters;
+import ru.gocinema.restapi.model.Option;
 import ru.gocinema.restapi.model.PaymentTicketParameters;
 import ru.gocinema.restapi.model.Ticket;
 import ru.gocinema.server.SecurityService;
@@ -28,12 +31,18 @@ public class TicketServiceImpl implements TicketService {
     private final SecurityService securityService;
     private final MovieShowRepository movieShowRepository;
     private final HallRepository hallRepository;
+    private final AppOptionService appOptionService;
+
+    private static final String SALE_CLOSED_MESSAGE = "Продажи закрыты";
 
     @Transactional
     @Override
     public Ticket payTicket(Integer ticketId, PaymentTicketParameters parameters) {
+        if (isSaleClosed()) {
+            throw new IllegalStateException(SALE_CLOSED_MESSAGE);
+        }
         ru.gocinema.server.model.Ticket ticket = ticketRepository.findById(ticketId).orElseThrow();
-        ticket.setQrCode("QR");
+        ticket.setQrCode("QR" + StringUtils.leftPad(String.valueOf(ticketId), 5, '0'));
         ticket.setPayed(true);
         ticket = ticketRepository.save(ticket);
         return ticketsMapper.map(ticket);
@@ -42,6 +51,9 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     @Override
     public Ticket bookTicket(BookingTicketParameters parameters) {
+        if (isSaleClosed()) {
+            throw new IllegalStateException(SALE_CLOSED_MESSAGE);
+        }
         ru.gocinema.server.model.Ticket ticket = new ru.gocinema.server.model.Ticket();
         ticket.setUser(securityService.getCurrentUser());
         ticket.setPayed(false);
@@ -67,5 +79,9 @@ public class TicketServiceImpl implements TicketService {
         ticket.setBookedPlaces(bookedPlaces);
 
         return ticketsMapper.map(ticketRepository.save(ticket));
+    }
+
+    private boolean isSaleClosed() {
+        return BooleanUtils.toBooleanObject(appOptionService.getAppOption(Option.IS_SALE_OPENED).getValue());
     }
 }
