@@ -37,4 +37,9 @@ public class MoviesController implements MoviesApi {
         movieService.savePoster(id, fileName, body);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Movie> getMovie(Integer id) {
+        return ResponseEntity.ok(movieService.getMovie(id));
+    }
 }

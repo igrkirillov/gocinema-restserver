@@ -347,6 +347,24 @@ paths:
   /movies/{id}:
     parameters:
       - $ref: '#/components/parameters/id'
+    get:
+      summary: Получить фильм по Id
+      operationId: getMovie
+      tags:
+        - Movies
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     patch:
       summary: Обновление параметров фильма
       operationId: updateMovie

@@ -7,6 +7,7 @@ import ru.gocinema.restapi.model.MovieParameters;
 
 public interface MovieService {
     List<Movie> getMovies();
+    Movie getMovie(int id);
     Movie saveMovie(MovieParameters parameters);
     void updateMovie(int id, MovieParameters parameters);
     void savePoster(int id, String fileName, Resource resource);

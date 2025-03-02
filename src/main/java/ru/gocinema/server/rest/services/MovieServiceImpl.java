@@ -33,6 +33,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie getMovie(int id) {
+        return movieMapper.map(movieRepository.findById(id).orElseThrow());
+    }
+
+    @Override
     public Movie saveMovie(MovieParameters parameters) {
         return movieMapper.map(movieRepository.save(movieMapper.map(parameters)));
     }
