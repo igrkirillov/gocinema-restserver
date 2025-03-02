@@ -44,5 +44,5 @@ public class MovieShow {
     @ToString.Exclude
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id", name = "movie_show_id")
-    private List<MovieShowPlace> places;
+    private List<BookedPlace> places;
 }

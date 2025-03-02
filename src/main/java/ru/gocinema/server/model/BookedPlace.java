@@ -8,21 +8,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Место на кино-сеансе
+ * Забронированное место на кино-сеанс
  */
 @Entity
-@Table(name = "movie_show_place")
+@Table(name = "booked_place")
 @ToString
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
-public class MovieShowPlace {
+public class BookedPlace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -38,11 +39,10 @@ public class MovieShowPlace {
     @JoinColumn(name = "hall_place_id")
     private HallPlace hallPlace;
 
-    // Забронировано ли место
-    @Column(name = "is_booked")
-    private boolean isBooked;
-
     @ManyToOne
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
+
+    @Column(name = "seance_date")
+    private LocalDate seanceDate;
 }

@@ -17,8 +17,8 @@ tags:
     description: Киносеансы
   - name: Movies
     description: Фильмы
-  - name: MovieShowPlace
-    description: Место на кино-сеанс
+  - name: BookedPlaces
+    description: Забронированное место на кино-сеанс
   - name: Tickets
     description: Билеты
   - name: AppOptions
@@ -223,6 +223,24 @@ paths:
   /movie-shows/{id}:
     parameters:
       - $ref: '#/components/parameters/id'
+    get:
+      summary: Получение кино-сеанса по id
+      operationId: getMovieShow
+      tags:
+        - MovieShows
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovieShow'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     patch:
       summary: Обновление параметров кино-сеанса
       operationId: updateMovieShow
@@ -256,14 +274,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /movie-show-places:
+  /booked-places:
     get:
       parameters:
         - $ref: "#/components/parameters/movieShowId"
-      summary: Получение мест на киносеанс
-      operationId: getMovieShowPlaces
+        - $ref: "#/components/parameters/date"
+      summary: Получение забронированных мест на киносеанс
+      operationId: getBookedPlaces
       tags:
-        - MovieShowPlaces
+        - BookedPlaces
       responses:
         200:
           description: OK
@@ -272,41 +291,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MovieShowPlace'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /movie-show-places/{id}/book:
-    parameters:
-      - $ref: '#/components/parameters/id'
-    put:
-      summary: Бронирование места на кино-сеанс
-      operationId: bookMovieShowPlace
-      tags:
-        - MovieShowPlaces
-      responses:
-        200:
-          description: OK
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /movie-show-places/{id}/cancel-book:
-    parameters:
-      - $ref: '#/components/parameters/id'
-    put:
-      summary: Отмена бронирования места на кино-сеанс
-      operationId: cancelBookMovieShowPlace
-      tags:
-        - MovieShowPlaces
-      responses:
-        200:
-          description: OK
+                  $ref: '#/components/schemas/BookedPlace'
         default:
           description: unexpected error
           content:
@@ -496,6 +481,13 @@ components:
       in: query
       schema:
         $ref: '#/components/schemas/id'
+    date:
+      name: date
+      description: дата
+      in: query
+      schema:
+        type: string
+        format: x-date
     userId:
       name: userId
       description: id пользователя
@@ -622,6 +614,8 @@ components:
     HallPlace:
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/id'
         col:
           type: integer
           format: int32
@@ -739,7 +733,7 @@ components:
           format: int32
           description: Длительность в минутах
           example: 120
-    MovieShowPlace:
+    BookedPlace:
       type: object
       properties:
         id:
@@ -748,9 +742,10 @@ components:
           $ref: "#/components/schemas/MovieShow"
         hallPlace:
           $ref: "#/components/schemas/HallPlace"
-        isBooked:
-          type: boolean
-          description: Место на сеанс забронировано?
+        seanceDate:
+          type: string
+          format: x-date
+          description: Дата сеанса
     Ticket:
       type: object
       properties:
@@ -764,17 +759,22 @@ components:
           type: string
           description: Кур-код билета
           example: "&&234324$7dfsmmvvvvvvr3"
-        movieShowPlaces:
+        bookedPlaces:
           type: array
           items:
-            $ref: "#/components/schemas/MovieShowPlace"
+            $ref: "#/components/schemas/BookedPlace"
     BookingTicketParameters:
       type: object
       properties:
-        movieShowPlaceIds:
+        movieShowId:
+          $ref: "#/components/schemas/id"
+        placeIds:
           type: array
           items:
             $ref: "#/components/schemas/id"
+        seanceDate:
+          type: string
+          format: x-date
     PaymentTicketParameters:
       type: object
       properties:

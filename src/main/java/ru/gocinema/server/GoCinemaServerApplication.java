@@ -2,7 +2,11 @@ package ru.gocinema.server;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class GoCinemaServerApplication {
 
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	public static void main(String[] args) {
 		SpringApplication.run(GoCinemaServerApplication.class, args);
@@ -34,6 +39,9 @@ public class GoCinemaServerApplication {
 	public Module javaTimeModule() {
 		var module = new JavaTimeModule();
 		module.addSerializer(LocalTime.class, new LocalTimeSerializer(TIME_FORMATTER));
+		module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
+		module.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
+		module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
 		return module;
 	}
 

@@ -36,4 +36,9 @@ public class MovieShowsController implements MovieShowsApi {
         movieShowsService.deleteMovieShow(id);
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<MovieShow> getMovieShow(Integer id) {
+        return ResponseEntity.ok(movieShowsService.getMovieShow(id));
+    }
 }

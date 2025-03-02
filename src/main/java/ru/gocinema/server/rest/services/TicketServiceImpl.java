@@ -1,8 +1,7 @@
 package ru.gocinema.server.rest.services;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,8 +10,11 @@ import ru.gocinema.restapi.model.BookingTicketParameters;
 import ru.gocinema.restapi.model.PaymentTicketParameters;
 import ru.gocinema.restapi.model.Ticket;
 import ru.gocinema.server.SecurityService;
-import ru.gocinema.server.model.MovieShowPlace;
-import ru.gocinema.server.repositories.MovieShowPlaceRepository;
+import ru.gocinema.server.model.BookedPlace;
+import ru.gocinema.server.model.MovieShow;
+import ru.gocinema.server.repositories.BookedPlaceRepository;
+import ru.gocinema.server.repositories.HallRepository;
+import ru.gocinema.server.repositories.MovieShowRepository;
 import ru.gocinema.server.repositories.TicketRepository;
 import ru.gocinema.server.rest.mappers.TicketsMapper;
 
@@ -22,9 +24,10 @@ public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
     private final TicketsMapper ticketsMapper;
-    private final MovieShowPlaceRepository movieShowPlaceRepository;
+    private final BookedPlaceRepository bookedPlaceRepository;
     private final SecurityService securityService;
-    private final EntityManager em;
+    private final MovieShowRepository movieShowRepository;
+    private final HallRepository hallRepository;
 
     @Transactional
     @Override
@@ -43,19 +46,25 @@ public class TicketServiceImpl implements TicketService {
         ticket.setUser(securityService.getCurrentUser());
         ticket.setPayed(false);
 
-        List<MovieShowPlace> places = parameters.getMovieShowPlaceIds().stream()
-                .map(movieShowPlaceRepository::findById)
-                .map(Optional::orElseThrow)
-                .collect(Collectors.toList());
-        if (places.stream().anyMatch(MovieShowPlace::isBooked)) {
+        MovieShow movieShow = movieShowRepository.findById(parameters.getMovieShowId()).orElseThrow();
+
+        Set<Integer> placeIdsOfBooked = bookedPlaceRepository.findByParameters(movieShow.getId(),
+                parameters.getSeanceDate()).stream().map(bp -> bp.getHallPlace().getId()).collect(
+                Collectors.toSet());
+        if (parameters.getPlaceIds().stream().anyMatch(placeIdsOfBooked::contains)) {
             throw new IllegalStateException("Места уже забронены");
         }
-        places.forEach(p -> {
-            p.setBooked(true);
-        });
-        movieShowPlaceRepository.saveAll(places);
 
-        ticket.setMovieShowPlaces(places);
+        List<BookedPlace> bookedPlaces = parameters.getPlaceIds().stream().map(plId -> {
+            BookedPlace place = new BookedPlace();
+            place.setHallPlace(hallRepository.findByPlaceId(plId).orElseThrow());
+            place.setMovieShow(movieShow);
+            place.setSeanceDate(parameters.getSeanceDate());
+            return place;
+        }).toList();
+        bookedPlaceRepository.saveAll(bookedPlaces);
+
+        ticket.setBookedPlaces(bookedPlaces);
 
         return ticketsMapper.map(ticketRepository.save(ticket));
     }

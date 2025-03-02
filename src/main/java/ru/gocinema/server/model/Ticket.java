@@ -39,7 +39,7 @@ public class Ticket {
     @ToString.Exclude
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id", name = "ticket_id")
-    private List<MovieShowPlace> movieShowPlaces;
+    private List<BookedPlace> bookedPlaces;
 
     @Column(name = "qr_code")
     private String qrCode;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gocinema.restapi.model.MovieShow;
 import ru.gocinema.restapi.model.MovieShowParameters;
-import ru.gocinema.server.model.MovieShowPlace;
+import ru.gocinema.server.model.BookedPlace;
 import ru.gocinema.server.repositories.HallRepository;
 import ru.gocinema.server.repositories.MovieRepository;
 import ru.gocinema.server.repositories.MovieShowRepository;
@@ -52,12 +52,17 @@ public class MovieShowsServiceImpl implements MovieShowsService {
         movieShowRepository.deleteById(id);
     }
 
-    private List<MovieShowPlace> createMovieShowPlaces(ru.gocinema.server.model.MovieShow movieShow) {
+    private List<BookedPlace> createMovieShowPlaces(ru.gocinema.server.model.MovieShow movieShow) {
         return movieShow.getHall().getPlaces().stream().map(hallPlace -> {
-            MovieShowPlace place = new MovieShowPlace();
+            BookedPlace place = new BookedPlace();
             place.setMovieShow(movieShow);
             place.setHallPlace(hallPlace);
             return place;
         }).toList();
+    }
+
+    @Override
+    public MovieShow getMovieShow(int id) {
+        return movieShowsMapper.map(movieShowRepository.findById(id).orElseThrow());
     }
 }

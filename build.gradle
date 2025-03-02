@@ -67,8 +67,8 @@ openApiGenerate {
 			dateLibrary: "java8",
 			interfaceOnly: "true"
 	])
-	typeMappings.set(['x-time':'LocalTime'])
-	importMappings.set(['LocalTime':'java.time.LocalTime'])
+	typeMappings.set(['x-time':'LocalTime', 'x-date':'LocalDate'])
+	importMappings.set(['LocalTime':'java.time.LocalTime', 'LocalDate':'java.time.LocalDate'])
 }
 
 jar {
