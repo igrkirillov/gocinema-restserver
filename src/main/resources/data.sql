@@ -68,9 +68,10 @@ merge into hall_place(hall_id, _row, _col, is_vip, is_blocked)
 key(hall_id, _row, _col)
 values ((select id from hall where name = 'Чаплин'), 2, 2, false, false);
 
-merge into movie(name, description, duration, country, release_date)
+merge into movie(name, description, duration, country, release_date, poster_url)
 key(name)
-values ('Звёздные войны XXIII: Атака клонированных клонов', 'Фильм о звёздных войнах. Фантастика.', 130, 'США', '1990-01-01');
+values ('Звёздные войны XXIII: Атака клонированных клонов', 'Фильм о звёздных войнах. Фантастика.', 130, 'США', '1990-01-01',
+'/posters?fileName=poster.png');
 
 merge into movie(name, description, duration, country, release_date)
 key(name)
