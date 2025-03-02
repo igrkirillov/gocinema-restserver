@@ -7,7 +7,7 @@ import org.mapstruct.MappingTarget;
 import ru.gocinema.restapi.model.MovieShow;
 import ru.gocinema.restapi.model.MovieShowParameters;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {HallMapper.class, MovieMapper.class})
 public interface MovieShowMapper {
     MovieShow map(ru.gocinema.server.model.MovieShow source);
 
