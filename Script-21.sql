@@ -38,23 +38,24 @@ create table "user" (
 	id serial primary key,
 	login varchar(256) not null,
 	password varchar(256) not null, -- hashed string
-	role varchar(256) not null --viewer or administartor
+	role varchar(256) not null --client or admin
 );
 comment on table "user" is 'Пользователь';
-comment on column "user"."role" is 'viewer or administartor';
-	
-create table movie_show_place (
-	id serial primary key,
-	movie_show_id int not null references movie_show(id),
-	hall_place_id int not null references hall_place(id),
-	is_booked boolean not null default false
-);
-comment on table movie_show_place is 'Место на сеанс';
+comment on column "user"."role" is 'CLIENT or ADMIN';
 
 create table ticket (
 	id serial primary key,
 	user_id int not null references "user"(id),
 	qr_code varchar(256) not null,
-	movie_show_place_id int null references movie_show_place(id)
+	is_payed boolean not null
 );
 comment on table ticket is 'Билет';
+
+create table booked_place (
+	id serial primary key,
+	movie_show_id int not null references movie_show(id),
+	hall_place_id int not null references hall_place(id),
+	ticket_id int not null references ticket(id),
+	seance_date date not null
+);
+comment on table booked_place is 'Забронированные места, привязанные к билету';
