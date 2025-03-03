@@ -800,10 +800,6 @@ components:
           type: string
           description: Страна
           example: "Россия"
-        releaseDate:
-          type: string
-          description: Дата выхода
-          example: "2020-01-01"
         duration:
           type: integer
           format: int32
