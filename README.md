@@ -15,7 +15,7 @@
 - [Hall.java (Кинозал)](src/main/java/ru/gocinema/server/model/Hall.java)
 - [HallPlace.java (Место в кинозале)](src/main/java/ru/gocinema/server/model/HallPlace.java)
 - [MovieShow.java (Киносеанс)](src/main/java/ru/gocinema/server/model/MovieShow.java)
-- [BookedPlace.java (Забронированное место на киносеанс)](src/main/java/ru/gocinema/server/model/MovieShowPlace.java)
+- [BookedPlace.java (Забронированное место на киносеанс)](src/main/java/ru/gocinema/server/model/BookedPlace.java)
 
 ![postgres - gocinema.png](postgres%20-%20gocinema.png)
 ## Rest API Swagger
