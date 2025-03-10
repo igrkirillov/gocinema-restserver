@@ -57,7 +57,7 @@ public class TicketServiceImpl implements TicketService {
                 "Дата сеанса: " + ticket.getBookedPlaces().getFirst().getSeanceDate().format(QR_SEANCE_DATE_FORMATTER),
                 "Время сеанса: " + ticket.getBookedPlaces().getFirst().getMovieShow().getStart().format(QR_SEANCE_TIME_FORMATTER),
                 "Места: " + ticket.getBookedPlaces().stream().map(p -> (p.getHallPlace().getRow()+1) + "-" + (p.getHallPlace().getCol()+1)).collect(
-                        Collectors.joining(",")));
+                        Collectors.joining("; ")));
     }
 
     @Transactional
