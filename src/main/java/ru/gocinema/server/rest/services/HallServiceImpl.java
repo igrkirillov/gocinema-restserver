@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gocinema.restapi.model.Hall;
-import ru.gocinema.restapi.model.HallParameters;
+import ru.gocinema.restapi.model.HallConfigurationParameters;
+import ru.gocinema.restapi.model.HallPricesParameters;
 import ru.gocinema.server.repositories.HallRepository;
 import ru.gocinema.server.repositories.MovieShowRepository;
 import ru.gocinema.server.rest.mappers.HallMapper;
@@ -18,6 +19,9 @@ public class HallServiceImpl implements HallService {
     private final HallMapper hallMapper;
     private final MovieShowRepository movieShowRepository;
 
+    private static final int DEFAULT_STANDARD_PRICE = 50;
+    private static final int DEFAULT_VIP_PRICE = 100;
+
     @Override
     public List<Hall> getAll() {
         return hallMapper.map(hallRepository.findAll());
@@ -25,14 +29,24 @@ public class HallServiceImpl implements HallService {
 
     @Transactional
     @Override
-    public Hall save(HallParameters parameters) {
-        var hall = hallRepository.save(hallMapper.map(parameters));
-        return hallMapper.map(hall);
+    public Hall save(HallConfigurationParameters parameters) {
+        var hall = hallMapper.map(parameters);
+        hall.setStandardPrice(DEFAULT_STANDARD_PRICE);
+        hall.setVipPrice(DEFAULT_VIP_PRICE);
+        return hallMapper.map(hallRepository.save(hall));
     }
 
     @Transactional
     @Override
-    public void update(int id, HallParameters parameters) {
+    public void updateConfiguration(int id, HallConfigurationParameters parameters) {
+        var hall = hallRepository.findById(id).orElseThrow();
+        hallMapper.fromDto(parameters, hall);
+        hallRepository.save(hall);
+    }
+
+    @Transactional
+    @Override
+    public void updatePrices(int id, HallPricesParameters parameters) {
         var hall = hallRepository.findById(id).orElseThrow();
         hallMapper.fromDto(parameters, hall);
         hallRepository.save(hall);

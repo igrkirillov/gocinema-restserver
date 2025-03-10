@@ -1,11 +1,11 @@
 package ru.gocinema.server.rest.services;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gocinema.restapi.model.BookingTicketParameters;
@@ -35,16 +35,29 @@ public class TicketServiceImpl implements TicketService {
 
     private static final String SALE_CLOSED_MESSAGE = "Продажи закрыты";
     private static final String PLACES_BOOKED_ALREADY = "Места уже забронены";
+    private static final DateTimeFormatter QR_SEANCE_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    private static final DateTimeFormatter QR_SEANCE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     @Transactional
     @Override
     public Ticket payTicket(Integer ticketId, PaymentTicketParameters parameters) {
         checkSaleOpened();
         ru.gocinema.server.model.Ticket ticket = ticketRepository.findById(ticketId).orElseThrow();
-        ticket.setQrCode("QR" + StringUtils.leftPad(String.valueOf(ticketId), 5, '0'));
+        ticket.setQrCode(generateQrCode(ticket));
         ticket.setPayed(true);
         ticket = ticketRepository.save(ticket);
         return ticketsMapper.map(ticket);
+    }
+
+    private String generateQrCode(ru.gocinema.server.model.Ticket ticket) {
+        return String.join("-",
+                "QR",
+                ticket.getBookedPlaces().getFirst().getMovieShow().getMovie().getName(),
+                ticket.getBookedPlaces().getFirst().getMovieShow().getHall().getName(),
+                ticket.getBookedPlaces().getFirst().getSeanceDate().format(QR_SEANCE_DATE_FORMATTER),
+                ticket.getBookedPlaces().getFirst().getMovieShow().getStart().format(QR_SEANCE_TIME_FORMATTER),
+                ticket.getBookedPlaces().stream().map(p -> (p.getHallPlace().getRow()+1) + "-" + (p.getHallPlace().getCol()+1)).collect(
+                        Collectors.joining(",")));
     }
 
     @Transactional

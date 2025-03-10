@@ -126,7 +126,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HallParameters'
+              $ref: '#/components/schemas/HallConfigurationParameters'
       responses:
         200:
           description: OK
@@ -140,19 +140,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /halls/{id}:
+  /halls/{id}/configuration:
     parameters:
       - $ref: '#/components/parameters/id'
     patch:
-      summary: Обновление кинозала
-      operationId: updateHall
+      summary: Обновление конфигурации кинозала
+      operationId: updateHallConfiguration
       tags:
         - Halls
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HallParameters'
+              $ref: '#/components/schemas/HallConfigurationParameters'
+      responses:
+        200:
+          description: OK
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /halls/{id}/prices:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    patch:
+      summary: Обновление цен кинозала
+      operationId: updateHallPrices
+      tags:
+        - Halls
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HallPricesParameters'
       responses:
         200:
           description: OK
@@ -633,7 +655,7 @@ components:
         - name
         - cols
         - rows
-    HallParameters:
+    HallConfigurationParameters:
       type: object
       properties:
         name:
@@ -656,14 +678,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HallPlaceParameters'
+      required:
+        - name
+        - cols
+        - rows
+    HallPricesParameters:
+      type: object
+      properties:
         standardPrice:
           $ref: '#/components/schemas/standardPrice'
         vipPrice:
           $ref: '#/components/schemas/vipPrice'
       required:
-        - name
-        - cols
-        - rows
+        - standardPrice
+        - vipPrice
     HallPlaceParameters:
       type: object
       properties:
