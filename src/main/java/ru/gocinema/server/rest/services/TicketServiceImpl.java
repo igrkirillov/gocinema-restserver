@@ -50,14 +50,14 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private String generateQrCode(ru.gocinema.server.model.Ticket ticket) {
-        return String.join("-",
+        return String.join("; ",
                 "QR код",
                 "Фильм: " + ticket.getBookedPlaces().getFirst().getMovieShow().getMovie().getName(),
                 "Зал: " + ticket.getBookedPlaces().getFirst().getMovieShow().getHall().getName(),
                 "Дата сеанса: " + ticket.getBookedPlaces().getFirst().getSeanceDate().format(QR_SEANCE_DATE_FORMATTER),
                 "Время сеанса: " + ticket.getBookedPlaces().getFirst().getMovieShow().getStart().format(QR_SEANCE_TIME_FORMATTER),
                 "Места: " + ticket.getBookedPlaces().stream().map(p -> (p.getHallPlace().getRow()+1) + "-" + (p.getHallPlace().getCol()+1)).collect(
-                        Collectors.joining("; ")));
+                        Collectors.joining("-")));
     }
 
     @Transactional
